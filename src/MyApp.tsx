@@ -1,29 +1,19 @@
+import { useState } from 'react';
 import Table from './Table';
 import { Character } from './types';
-
-const characters: Character[] = [
-  {
-    name: 'Charlie',
-    job: 'Janitor',
-  },
-  {
-    name: 'Mac',
-    job: 'Bouncer',
-  },
-  {
-    name: 'Dee',
-    job: 'Aspring actress',
-  },
-  {
-    name: 'Dennis',
-    job: 'Bartender',
-  },
-];
+import charactersJson from './characters.json';
 
 export default function MyApp() {
+  const [characters, setCharacters] = useState<Character[]>(charactersJson);
+
+  function removeOneCharacter(index: number): void {
+    const updatedCharacters = characters.filter((character, i) => i !== index);
+    setCharacters(updatedCharacters);
+  };
+
   return (
     <div className="container">
-      <Table characterData={characters}/>
+      <Table characterData={characters} removeCharacter={removeOneCharacter} />
     </div>
   );
 }
