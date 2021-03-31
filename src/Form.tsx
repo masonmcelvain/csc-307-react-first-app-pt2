@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { Character } from './types';
 
-export default function Form() {
-  const [person, setPerson] = useState<Character>({ name: '', job: ''});
+interface FormProps {
+  handleSubmit: (person: Character) => void,
+}
+
+export default function Form({ handleSubmit }: FormProps) {
+  const emptyPerson: Character = { name: '', job: ''};
+  const [person, setPerson] = useState<Character>(emptyPerson);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const {name, value} = event.target;
@@ -11,6 +16,11 @@ export default function Form() {
     } else {
       setPerson({name: value, job: person.job});
     }
+  }
+
+  function submitForm(): void {
+    handleSubmit(person);
+    setPerson(emptyPerson);
   }
 
   return (
@@ -29,6 +39,7 @@ export default function Form() {
         id="job"
         value={person.job}
         onChange={handleChange} />
+      <input type="button" value="Submit" onClick={submitForm} />
     </form>
   );
 }

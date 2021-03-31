@@ -11,10 +11,14 @@ export default function MyApp() {
     setCharacters(updatedCharacters);
   };
 
+  function addCharacter(person: Character): void {
+    setCharacters([...characters, person]);
+  }
+
   return (
     <div className="container">
       <Table characterData={characters} removeCharacter={removeOneCharacter} />
-      <Form />
+      <Form handleSubmit={addCharacter}/>
     </div>
   );
 }
