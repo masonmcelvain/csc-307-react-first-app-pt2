@@ -18,6 +18,17 @@ async function fetchAll(): Promise<Character[]> {
   }
 }
 
+async function makePostCall(person: Character): Promise<any> {
+  try {
+    const response = await axios.post(baseEndpoint + "users", person);
+    return response;
+  }
+  catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
 export default function MyApp() {
   const [characters, setCharacters] = useState<Character[]>([]);
 
@@ -36,7 +47,11 @@ export default function MyApp() {
   };
 
   function addCharacter(person: Character): void {
-    setCharacters([...characters, person]);
+    makePostCall(person).then(result => {
+      if (result) {
+        setCharacters([...characters, person] );
+      }
+    });
   }
 
   return (
