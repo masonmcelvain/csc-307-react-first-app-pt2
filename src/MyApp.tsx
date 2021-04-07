@@ -6,18 +6,28 @@ import { Character } from './types';
 
 const baseEndpoint = "http://127.0.0.1:5000/";
 
+async function fetchAll(): Promise<Character[]> {
+  try {
+    const response = await axios.get(baseEndpoint + "users");
+    return response.data.users_list;
+  }
+  catch (error) {
+    // We're not handling errors. Just logging into the console.
+    console.log(error);
+    return [];
+  }
+}
+
 export default function MyApp() {
   const [characters, setCharacters] = useState<Character[]>([]);
 
   // Fetch the data from the backend on mount
   useEffect(() => {
-    axios.get(baseEndpoint + "users")
-      .then(res => {
-        setCharacters(res.data.users_list);
-      })
-      .catch(function (error) {
-        console.log("GET request for /users failed:" + error);
-      });
+    fetchAll().then(newCharacters => {
+      if (newCharacters) {
+        setCharacters(newCharacters);
+      }
+    })
   }, []);
 
   function removeOneCharacter(index: number): void {
