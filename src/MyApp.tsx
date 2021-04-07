@@ -29,6 +29,17 @@ async function makePostCall(person: Character): Promise<any> {
   }
 }
 
+async function deleteCharacter(person: Character): Promise<any> {
+  try {
+    const response = await axios.delete(baseEndpoint + `users/${person.id}`);
+    return response;
+  }
+  catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
 export default function MyApp() {
   const [characters, setCharacters] = useState<Character[]>([]);
 
@@ -42,8 +53,12 @@ export default function MyApp() {
   }, []);
 
   function removeOneCharacter(index: number): void {
-    const updatedCharacters = characters.filter((character, i) => i !== index);
-    setCharacters(updatedCharacters);
+    deleteCharacter(characters[index]).then(response => {
+      if (response && response.status === 204) {
+        const updatedCharacters = characters.filter((_, i) => i !== index);
+        setCharacters(updatedCharacters);
+      }
+    });
   };
 
   function addCharacter(person: Character): void {

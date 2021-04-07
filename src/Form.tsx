@@ -6,15 +6,15 @@ interface FormProps {
 }
 
 export default function Form({ handleSubmit }: FormProps) {
-  const emptyPerson: Character = { name: '', job: ''};
+  const emptyPerson: Character = { name: '', job: '', id: ''};
   const [person, setPerson] = useState<Character>(emptyPerson);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const {name, value} = event.target;
     if (name === "job") {
-      setPerson({name: person.name, job: value});
+      setPerson({name: person.name, job: value, id: person.id});
     } else {
-      setPerson({name: value, job: person.job});
+      setPerson({name: value, job: person.job, id: person.id});
     }
   }
 
