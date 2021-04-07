@@ -47,8 +47,8 @@ export default function MyApp() {
   };
 
   function addCharacter(person: Character): void {
-    makePostCall(person).then(result => {
-      if (result) {
+    makePostCall(person).then(response => {
+      if (response && response.status === 201) {
         setCharacters([...characters, person] );
       }
     });
