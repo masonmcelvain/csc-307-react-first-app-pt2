@@ -6,6 +6,7 @@ function TableHeader()  {
       <tr>
         <th>Name</th>
         <th>Job</th>
+        <th>ID</th>
         <th>Remove</th>
       </tr>
     </thead>
@@ -23,6 +24,7 @@ function TableBody({ characterData, removeCharacter }: TableBodyProps) {
       <tr key={index}>
         <td>{row.name}</td>
         <td>{row.job}</td>
+        <td>{row.id}</td>
         <td>
           <button onClick={() => removeCharacter(index)}>Delete Row</button>
         </td>
